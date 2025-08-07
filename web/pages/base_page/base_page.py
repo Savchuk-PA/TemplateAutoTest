@@ -9,7 +9,8 @@ class BasePage:
     def __init__(self, driver):
         self.host = settings.web.host
         self.driver = driver
-        print(self.host)
+        self.logger = settings.logger
+        self.logger.info(f"Base page host: {self.host}")
 
     @allure.step("Open url a browser")
     def open(self, url):
