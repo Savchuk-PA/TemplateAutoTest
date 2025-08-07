@@ -14,4 +14,4 @@ class User(DataGenerateHelper):
 
 
 standard_user = User(username="standard_user", password="secret_sauce")
-error_user = User(username="error_user", password="secret_sauce")
+locked_out_user = User(username="locked_out_user", password="secret_sauce")

@@ -15,13 +15,16 @@ class AuthPage(BasePage):
 
     @allure.step("Input username")
     def input_username(self, username: str):
-        self.logger.info(f"Input username {username}")
+        """input username"""
+        self.logger.info(f"Input username: {username}")
         self.element_is_visible(locator=self.__locators.input_username).send_keys(
             username
         )
 
     @allure.step("Input password")
     def input_password(self, password: str):
+        """input password"""
+        self.logger.info(f"Input password: {password}")
         self.element_is_visible(locator=self.__locators.input_password).send_keys(
             password
         )
@@ -48,9 +51,14 @@ class AuthPage(BasePage):
         Returns:
             None
         """
+
         if user:
             username = user.username
             password = user.password
+        if not username or not password:
+            raise ValueError(
+                "Username and password must be provided directly or via User object"
+            )
         self.input_username(username=username)
         self.input_password(password=password)
         self.click_login_button()

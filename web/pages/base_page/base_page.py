@@ -68,3 +68,12 @@ class BasePage:
         res = self.element_is_visible(locator=self.__base_locators.logo).is_displayed()
         self.logger.info(f"Visibility logo: {res}")
         return res
+
+    @allure.step("Get error message")
+    def get_error_message(self):
+        self.logger.info(f"Get error message...")
+        text_error_message = self.element_is_visible(
+            locator=self.__base_locators.error_message
+        ).text
+        self.logger.info(f"Error message: {text_error_message}")
+        return text_error_message
