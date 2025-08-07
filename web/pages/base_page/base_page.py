@@ -3,10 +3,12 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 from settings import settings
+from web.pages.base_page.base_locators import BasePageLocators
 
 
 class BasePage:
     def __init__(self, driver):
+        self.__base_locators = BasePageLocators
         self.host = settings.web.host
         self.driver = driver
         self.logger = settings.logger
@@ -18,7 +20,7 @@ class BasePage:
 
     @allure.step("Open url in to object page")
     def open_self(self):
-        self.driver.get(f"{self.host}{self.endpoint}")
+        self.driver.get(f"{self.host}{self._endpoint}")
 
     @allure.step("Find a visible element")
     def element_is_visible(self, locator, timeout=20):
@@ -56,3 +58,10 @@ class BasePage:
     @allure.step("Go to specified element")
     def go_to_element(self, element):
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
+
+    @allure.step("Check visibility logo")
+    def check_visibility_logo(self):
+        self.logger.info(f"Check visibility logo...")
+        res = self.element_is_visible(locator=self.__base_locators.logo).is_displayed()
+        self.logger.info(f"Visibility logo: {res}")
+        return res
