@@ -27,7 +27,7 @@ class BasePage:
 
     @allure.step("Find a visible element")
     def element_is_visible(self, locator, timeout=20):
-        self.go_to_element(self.element_is_present(locator))
+        self.logger.info(f"Find a visible element: {locator}")
         return wait(self.driver, timeout).until(
             EC.visibility_of_element_located(locator)
         )
@@ -77,3 +77,16 @@ class BasePage:
         ).text
         self.logger.info(f"Error message: {text_error_message}")
         return text_error_message
+
+    @allure.step("Base selector, set option")
+    def base_select_list(self, select_list_value):
+        self.logger.info(f"Open list items in selector")
+        with allure.step(f"Open list items in selector"):
+            self.element_is_visible(locator=self.__base_locators.select_list).click()
+            self.logger.info(f"Base selector, set option: {select_list_value}")
+            with allure.step(f"Base selector, set option: {select_list_value}"):
+                self.element_is_visible(
+                    locator=self.__base_locators.select_list_option_value(
+                        value=select_list_value
+                    )
+                ).click()
