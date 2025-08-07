@@ -7,30 +7,29 @@ from .locators import LoginPageLocators
 
 class AuthPage(BasePage):
 
-    locators = LoginPageLocators
-
     def __init__(self, driver):
         super().__init__(driver)
-        self.endpoint = ""
+        self.__locators = LoginPageLocators
+        self._endpoint = ""
         self.open_self()
 
     @allure.step("Input username")
     def input_username(self, username: str):
         self.logger.info(f"Input username {username}")
-        self.element_is_visible(locator=self.locators.input_username).send_keys(
+        self.element_is_visible(locator=self.__locators.input_username).send_keys(
             username
         )
 
     @allure.step("Input password")
     def input_password(self, password: str):
-        self.element_is_visible(locator=self.locators.input_password).send_keys(
+        self.element_is_visible(locator=self.__locators.input_password).send_keys(
             password
         )
 
     @allure.step("Click login button")
     def click_login_button(self):
         self.logger.info(f"Click login button")
-        self.element_is_visible(locator=self.locators.loing_button).click()
+        self.element_is_visible(locator=self.__locators.loing_button).click()
 
     @allure.step("Login to main page")
     def login(
