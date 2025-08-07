@@ -4,12 +4,15 @@ from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 from settings import settings
 from web.pages.base_page.base_locators import BasePageLocators
+from ..info_messages import info_erorros_messages
+from ..info_messages.info_erorros_messages import messages
 
 
 class BasePage:
     def __init__(self, driver):
         self.__base_locators = BasePageLocators
         self.host = settings.web.host
+        self.info_messages = messages
         self.driver = driver
         self.logger = settings.logger
         self.logger.info(f"Base page host: {self.host}")
